@@ -1,0 +1,10 @@
+﻿<Project>
+  <ItemGroup>
+    <Compile Update="**\*AssemblyMarker.cs" Visible="false" />
+
+    <!-- Возможно когда-то этот код вызовет циклическую зависимость в мсбилде..-->
+    <Compile Update="**\*.cs">
+      <DependentUpon>$([System.Text.RegularExpressions.Regex]::Replace('%(Filename)', '\..*', '')).cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+</Project>
