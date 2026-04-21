@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\libs\Kira.EF.DependencyInjection\Kira.EF.DependencyInjection.csproj" />
+    <ProjectReference Include="..\..\..\..\..\..\libs\Kira.EF.Design\Kira.EF.Design.csproj" />
+    <ProjectReference Include="..\..\..\..\..\..\libs\Kira.EF\Kira.EF.csproj" />
+    <ProjectReference Include="..\Kira.Security.Management.Core\Kira.Security.Management.Core.csproj" />
+    <ProjectReference Include="..\Kira.Security.Management.Infrastructure.Persistence\Kira.Security.Management.Infrastructure.Persistence.csproj" />
+    <ProjectReference Include="..\Kira.Security.Management.UseCases\Kira.Security.Management.UseCases.csproj" />
+  </ItemGroup>
+
+</Project>

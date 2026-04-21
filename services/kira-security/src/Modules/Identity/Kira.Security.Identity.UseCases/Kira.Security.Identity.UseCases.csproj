@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\libs\Kira.UseCases\Kira.UseCases.csproj" />
+    <ProjectReference Include="..\..\..\Kira.Security.Core\Kira.Security.Core.csproj" />
+    <ProjectReference Include="..\..\..\Kira.Security.UseCases\Kira.Security.UseCases.csproj" />
+    <ProjectReference Include="..\Kira.Security.Identify.Contracts\Kira.Security.Identify.Contracts.csproj" />
+    <ProjectReference Include="..\Kira.Security.Identify.Core\Kira.Security.Identify.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" />
+    <PackageReference Include="Microsoft.Extensions.Options" />
+  </ItemGroup>
+
+</Project>

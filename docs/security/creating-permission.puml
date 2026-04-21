@@ -1,0 +1,38 @@
+@startuml
+skinparam maxMessageSize 150
+skinparam responseMessageBelowArrow true
+
+title Динамическая регистрация прав (Permission Discovery)
+
+participant "Board Service\n(Микросервис)" as Board
+participant "Message Broker\n(RabbitMQ)" as Broker
+participant "Security IAM\n(Сервис авторизации)" as IAM
+database "Security Database\n(PostgreSQL)" as DB
+
+note over Board: Старт сервиса.\nЧтение констант прав\n(boards:create, tasks:delete)
+
+Board -> Broker: Publish(ModulePermissionsRegisteredEvent)\n[Список прав и описание]
+activate Board
+deactivate Board
+
+Broker -> IAM: Consume(ModulePermissionsRegisteredEvent)
+activate IAM
+
+IAM -> DB: SELECT Id FROM Permissions
+activate DB
+DB --> IAM: Текущие права
+deactivate DB
+
+note over IAM: Сравнение полученных прав\nс существующими в БД
+
+opt Если есть новые права
+    IAM -> DB: INSERT INTO Permissions\n(Новые строки: boards:create, etc.)
+    activate DB
+    DB --> IAM: OK
+    deactivate DB
+end
+
+note over IAM: Права доступны для\nназначения ролям в UI
+deactivate IAM
+
+@enduml

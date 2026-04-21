@@ -1,0 +1,44 @@
+@startuml
+skinparam maxMessageSize 150
+skinparam responseMessageBelowArrow true
+
+title Проверка прав при выполнении бизнес-операции (gRPC)
+
+actor "Пользователь\n(Frontend)" as User
+participant "API Gateway\n(BFF)" as BFF
+participant "Board Service\n(PEP)" as Board
+participant "Security IAM\n(PDP)" as IAM
+database "Board Database\n(PostgreSQL)" as BoardDB
+
+User -> BFF: DELETE /api/workspaces/10/boards/555\n(JWT Токен)
+activate BFF
+
+BFF -> BFF: Валидация JWT\nИзвлечение UserId
+BFF -> Board: DELETE /boards/555\nHeader: X-User-Id, X-Workspace-Id=10
+activate Board
+deactivate BFF
+
+note over Board: Срабатывает [HasPermission("boards:delete")]
+
+Board -> IAM: gRPC: CheckAccess(UserId, WorkspaceId=10, "boards:delete")
+activate IAM
+
+note over IAM: IAM извлекает роли пользователя\nи проверяет матрицу прав
+
+IAM --> Board: gRPC Response: { IsAllowed: true }
+deactivate IAM
+
+opt Если IsAllowed == true
+    Board -> BoardDB: DELETE FROM Boards WHERE Id=555 AND WorkspaceId=10
+    activate BoardDB
+    BoardDB --> Board: OK
+    deactivate BoardDB
+    
+    Board --> User: 200 OK / 204 No Content
+else Если IsAllowed == false
+    Board --> User: 403 Forbidden
+end
+
+deactivate Board
+
+@enduml

@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Update="Registration\Commands\CreateRegistrationSession\CreateRegistrationSessionCommandValidator.cs">
+      <DependentUpon>CreateRegistrationSessionCommandHanled.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Features\Login\Commands\LoginByCode\LoginByCodeCommand.Handler.cs">
+      <DependentUpon>LoginByOneTimeCodeCommand.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Features\Login\Commands\SendOneTimeLoginCode\SendOneTimeLoginCodeCommand.Handler.cs">
+      <DependentUpon>SendOneTimeLoginCodeCommand.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Kira.Security.Core\Kira.Security.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" />
+    <PackageReference Include="MediatR" />
+    <PackageReference Include="Microsoft.Extensions.Options" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
+  </ItemGroup>
+
+</Project>
